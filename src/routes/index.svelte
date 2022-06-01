@@ -4,6 +4,9 @@
 	import { onMount } from 'svelte';
 	import { quintInOut } from 'svelte/easing';
 	import Programming from '$lib/components/svg/Programming.svelte';
+	import Contributions from '$lib/components/svg/Contributions.svelte';
+	import Button from '$lib/components/ui/Button.svelte';
+	import Game from '$lib/components/game/Game.svelte';
 
 	import Card from '$lib/components/ui/Card.svelte';
 	import CardSkeleton from '$lib/components/ui/CardSkeleton.svelte';
@@ -36,6 +39,8 @@
 	let innerWidth: number = 0;
 	let isMobile: boolean = false;
 	let showSkills: boolean = false;
+	let showGame: boolean = false;
+	let isPlaying: boolean = false;
 
 	function setClass(tag: string) {
 		switch (tag) {
@@ -100,19 +105,17 @@
 	let repos: Array<Repo> = [];
 	let articles: Array<Article> = [];
 	let repoError: boolean = false;
+	let articleError: boolean = false;
 
 	$: if (browser && innerWidth < 992) {
 		isMobile = true;
 	} else {
 		isMobile = false;
 	}
-
 	if (browser) {
 		getRepos();
 		getArticles();
 	}
-
-	$: console.log(repoError, repos);
 
 	async function getRepos() {
 		try {
@@ -120,23 +123,38 @@
 			repos = await res.json();
 		} catch (error) {
 			console.error(error);
-			console.log('??');
 			repoError = true;
 		}
 	}
 
 	async function getArticles() {
-		const res = await fetch(`https://dev.to/api/articles?username=alextana`);
-		articles = await res.json();
+		try {
+			const res = await fetch(`https://dev.to/api/articles?username=alextana`);
+			articles = await res.json();
+		} catch (error) {
+			console.error(error);
+			articleError = true;
+		}
 	}
 
 	function setGreeting() {
 		selectedGreeting = greetings[Math.floor(Math.random() * greetings.length)];
 	}
 
+	function setPlayingMode(type: string) {
+		switch (type) {
+			case 'playing':
+				isPlaying = true;
+				break;
+			case 'not_playing':
+				isPlaying = false;
+				break;
+		}
+	}
+
 	onMount(() => {
 		setGreeting();
-
+		showGame = true;
 		showSkills = true;
 
 		setInterval(() => {
@@ -165,9 +183,8 @@
 					{@const opacity = Math.random() * 0.17}
 					{@const animationDuration = Math.floor(Math.random() * (15 - 3) + 3)}
 					<div
-						transition:scale={{ duration: 400, delay: i * 50 }}
-						class="floating-skill bg-green-800 px-2 py-6 font-mono absolute text-md lg:text-2xl"
-						style="top: {top}px; left: {left}px; z-index: {top}; opacity: {opacity}; animation-duration: {animationDuration}s"
+						class="floating-skill bg-gray-800 px-2 py-6 font-mono absolute text-md lg:text-2xl"
+						style="animation-duration: {animationDuration}s; top: {top}px; left: {left}px; z-index: {top}; opacity: {opacity};"
 					>
 						{skill}
 					</div>
@@ -193,6 +210,14 @@
 				</div>
 			{/if}
 		</div>
+		{#if showGame}
+			<div
+				transition:scale={{ duration: 300, delay: 1000 }}
+				class="game-button w-full flex justify-center mt-4"
+			>
+				<Button on:click={() => setPlayingMode('playing')} type="cta">Bored?</Button>
+			</div>
+		{/if}
 	</div>
 </div>
 
@@ -215,34 +240,31 @@
 		</div>
 		<div class="grid grid-cols-1 md:grid-cols-2 h-max gap-3 justify-start items-start">
 			{#if repos.length}
-				{#each repos || [] as repo}
+				{#each repos || [] as repo, i}
 					{#if repo.name !== 'alextana'}
-						<Card>
-							<div class="repo-info mb-2">
-								<div class="repo-name">
-									{repo?.name}
-								</div>
-								{#if repo?.description}
-									<div class="repo-description text-sm">
-										{repo?.description}
+						<div transition:scale={{ duration: 300, delay: i * 50 }} class="card-transition">
+							<Card>
+								<div class="repo-info mb-2">
+									<div class="repo-name">
+										{repo?.name}
 									</div>
-								{/if}
-							</div>
+									{#if repo?.description}
+										<div class="repo-description text-sm">
+											{repo?.description}
+										</div>
+									{/if}
+								</div>
 
-							<div class="links flex gap-1">
-								{#if repo.homepage}
-									<a
-										href={repo?.homepage}
-										class="bg-blue-700 text-white w-max px-4 py-1 rounded-md"
-									>
-										Homepage
-									</a>
-								{/if}
-								<a href={repo?.url} class="bg-gray-700 text-white w-max px-4 py-1 rounded-md">
-									Github
-								</a>
-							</div>
-						</Card>
+								<div class="links flex gap-1">
+									{#if repo.homepage}
+										<Button type="primary" link={repo?.homepage}>Website</Button>
+									{/if}
+									{#if repo.url}
+										<Button type="tertiary" link={repo?.url}>Github</Button>
+									{/if}
+								</div>
+							</Card>
+						</div>
 					{/if}
 				{/each}
 			{:else if repoError}
@@ -257,64 +279,104 @@
 			<div class=" font-bold text-4xl tracking-tighter mb-6 text-white">My latest articles:</div>
 		</div>
 		<div class="articles-container flex-grow grid grid-cols-2">
-			{#each articles as article}
-				<Card link={article.url} targetBlank>
-					{#if article.social_image}
-						<img class="rounded-3xl mb-4" src={article.social_image} alt={article.title} />
-					{/if}
-					{#if article.title}
-						{article.title}
-					{/if}
-					<div class="article-interactions w-full flex justify-between">
-						<div class="positive-interactions flex gap-1 items-center">
-							<div class="icon">
-								<svg
-									xmlns="http://www.w3.org/2000/svg"
-									class="h-4 w-4 text-gray-400 hover:text-gray-500"
-									fill="none"
-									viewBox="0 0 24 24"
-									stroke="currentColor"
-									stroke-width="2"
-								>
-									<path
-										stroke-linecap="round"
-										stroke-linejoin="round"
-										d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.5 0-.905.405-.905.905 0 .714-.211 1.412-.608 2.006L7 11v9m7-10h-2M7 20H5a2 2 0 01-2-2v-6a2 2 0 012-2h2.5"
-									/>
-								</svg>
+			{#if articles.length}
+				{#each articles as article}
+					<Card link={article.url} targetBlank>
+						{#if article.social_image}
+							<img class="rounded-3xl mb-4" src={article.social_image} alt={article.title} />
+						{/if}
+						{#if article.title}
+							{article.title}
+						{/if}
+						<div class="article-interactions w-full flex justify-between">
+							<div class="positive-interactions flex gap-1 items-center">
+								<div class="icon">
+									<svg
+										xmlns="http://www.w3.org/2000/svg"
+										class="h-4 w-4 text-gray-400 hover:text-gray-500"
+										fill="none"
+										viewBox="0 0 24 24"
+										stroke="currentColor"
+										stroke-width="2"
+									>
+										<path
+											stroke-linecap="round"
+											stroke-linejoin="round"
+											d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.5 0-.905.405-.905.905 0 .714-.211 1.412-.608 2.006L7 11v9m7-10h-2M7 20H5a2 2 0 01-2-2v-6a2 2 0 012-2h2.5"
+										/>
+									</svg>
+								</div>
+								<div class="count text-xs">
+									{article.positive_reactions_count}
+								</div>
 							</div>
-							<div class="count text-xs">
-								{article.positive_reactions_count}
+							<div class="reading-time">
+								{#if article.reading_time_minutes}
+									<span class="w-max text-align-right block mt-2 ml-auto text-xs text-gray-400"
+										>{article.reading_time_minutes}min read</span
+									>
+								{/if}
 							</div>
 						</div>
-						<div class="reading-time">
-							{#if article.reading_time_minutes}
-								<span class="w-max text-align-right block mt-2 ml-auto text-xs text-gray-400"
-									>{article.reading_time_minutes}min read</span
-								>
-							{/if}
-						</div>
-					</div>
-					{#if article.tag_list.length}
-						<div class="tag-list flex gap-1 flex-wrap mt-4">
-							{#each article.tag_list as tag}
-								<div
-									class="
+						{#if article.tag_list.length}
+							<div class="tag-list flex gap-1 flex-wrap mt-4">
+								{#each article.tag_list as tag}
+									<div
+										class="
 										{setClass(tag)} tag px-2 py-1 text-white rounded-md smaller-txt font-semibold uppercase
 									"
-								>
-									{tag}
-								</div>
-							{/each}
-						</div>
-					{/if}
-				</Card>
-			{/each}
+									>
+										{tag}
+									</div>
+								{/each}
+							</div>
+						{/if}
+					</Card>
+				{/each}
+			{:else if articleError}
+				Could not load articles
+			{:else}
+				<CardSkeleton amount={1} />
+			{/if}
 		</div>
 	</div>
 </div>
 
-<div class="about-me relative bg-orange-400 text-zinc-800 py-24 overflow-hidden">
+<div class="about-experience relative pink-gradient text-gray-800 py-32 overflow-hidden">
+	<div class="welcoming opacity-10 z-1 absolute top-1/2 left-32 transform -translate-y-1/2">
+		<Contributions />
+	</div>
+	<div class="container relative ml-auto z-5">
+		<div class="about-text w-full lg:w-2/3 mx-auto lg:ml-auto text-left lg:text-right">
+			<h1 class="text-6xl lg:text-8xl font-extrabold tracking-tighter mb-4">experience</h1>
+			<p
+				class="about-text inline mb-1 bg-fuchsia-500/10 backdrop-blur-lg leading-loose text-xl tracking-wide"
+			>
+				I have been interested in web design and development since when I was 12, and I've watched
+				the web change over the years from table-based layouts to mobile-friendly fully fledged
+				desktop-like applications.
+				<br />
+				I started working professionally as a front end developer in 2018, building websites for car
+				dealerships - using a wide range of technologies including
+				<span class="text-2xl xl:text-3xl font-extrabold font-mono tracking-tighter"
+					>{'<html/>'}</span
+				>,
+				<span class="text-2xl xl:text-3xl font-extrabold tracking-tighter css-anim">CSS</span>,
+				<span class="text-2xl xl:text-3xl font-mono">{'{.js}'}</span> and
+				<span class="text-2xl xl:text-3xl font-mono">{'{{ Vue }}'}</span>.
+				<br />
+				In 2021 I started working at Barkweb, where I'm helping the team build a CMS and e-commerce/auctions
+				platforms using cutting edge technologies like
+				<span class="text-2xl xl:text-3xl font-mono tracking-tighter">$: Svelte</span>,
+				<span class="text-2xl xl:text-3xl italic tracking-tighter font-extrabold">GO</span>
+				and <span class="text-2xl xl:text-3xl font-mono">>>esbuild</span> to name a few.
+				<br />
+			</p>
+		</div>
+	</div>
+</div>
+
+<div class="about-me relative blue-gradient text-white py-32 overflow-hidden">
 	<div class="welcoming opacity-10 z-1 absolute top-1/2 right-32 transform -translate-y-1/2">
 		<Programming />
 	</div>
@@ -325,26 +387,47 @@
 				class="about-text inline mb-1 bg-black/5 backdrop-blur-lg leading-loose text-xl tracking-wide"
 			>
 				You probably already know all the boring stuff, I enjoy building <span
-					class="font-extrabold text-3xl">great</span
+					class="font-extrabold text-4xl xl:text-6xl tracking-tighter">great</span
 				>
-				applications focusing on the finer details and user experience - A designer's mockup can be built
+				applications focusing on the finer details and user experience - a designer's mockup can be built
 				into an application in a thousand different ways, which is why I'm so passionate about front
 				end development.
 				<br />
 				<br />
-				When I'm not behind a screen you can find me playing drums, playing with my cat or outside, walking
+				When I'm not behind a screen you can find me playing drums, playing with my cat, or outside walking
 				along the beautiful and chaotic beach of Brighton.
 			</p>
 		</div>
 	</div>
 </div>
 
+{#if isPlaying}
+	<Game on:close={() => (isPlaying = false)} />
+{/if}
+
 <svelte:window bind:innerWidth />
 
 <style>
 	.hero-section {
 		height: 70vh;
+		background-image: linear-gradient(
+			106.4deg,
+			rgba(255, 104, 192, 1) 11.1%,
+			rgba(104, 84, 249, 1) 81.3%
+		);
+	}
+
+	.blue-gradient {
 		background-image: linear-gradient(to right, #6a11cb 0%, #2575fc 100%);
+	}
+
+	.pink-gradient {
+		background-image: radial-gradient(
+			circle 673px at 10% 20%,
+			rgba(255, 220, 163, 1) 0%,
+			rgba(129, 255, 239, 1) 48.5%,
+			rgba(139, 172, 251, 1) 97.8%
+		);
 	}
 
 	.floating-skill {

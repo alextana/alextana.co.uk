@@ -31,10 +31,13 @@
 		"svelte-preprocess": "^4.10.5",
 		"tailwindcss": "^3.0.23",
 		"tslib": "^2.3.1",
-		"typescript": "~4.6.2"
+		"typescript": "~4.6.2",
+		"uuidv4": "^6.2.13"
 	},
 	"type": "module",
 	"dependencies": {
+		"@types/uuid": "^8.3.4",
+		"svelte-confetti-explosion": "^0.2.0",
 		"svelte-cubed": "^0.2.1",
 		"three": "^0.140.2"
 	}

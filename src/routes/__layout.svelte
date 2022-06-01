@@ -1,16 +1,29 @@
 <script>
 	import '../app.css';
-	import Header from '$lib/components/header/Header.svelte';
 	import Footer from '$lib/components/footer/Footer.svelte';
+	import { scrollingEnabled } from '$lib/stores/scrollingEnabled';
 </script>
 
-<!-- <Header /> -->
-<slot />
-<Footer />
+<div class="main-container {!$scrollingEnabled ? 'lock-scroll' : ''}">
+	<slot />
+	<Footer />
+</div>
 
 <style>
 	:global(body) {
 		background: #1f1d26;
 		color: white;
+	}
+
+	:global(.lock-scroll) {
+		margin: 0;
+		height: 100vh;
+		overflow: hidden;
+	}
+
+	@media (max-width: 992px) {
+		:global(.container) {
+			padding: 0px 15px !important;
+		}
 	}
 </style>
