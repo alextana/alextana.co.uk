@@ -2,8 +2,7 @@
 	export let link: string = '';
 	export let targetBlank: boolean = false;
 
-	const classToUse: string =
-		'card bg-zinc-900 cursor-pointer hover:bg-blue-900 p-6 rounded-3xl shadow-lg text-gray-200';
+	const classToUse: string = 'card transition-all bg-black rounded-3xl p-6 hover:-translate-y-1';
 </script>
 
 {#if link !== ''}
@@ -13,3 +12,6 @@
 		<slot />
 	</div>
 {/if}
+
+<style>
+</style>

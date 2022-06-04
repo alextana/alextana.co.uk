@@ -11,7 +11,8 @@
 
 <style>
 	:global(body) {
-		background: #1f1d26;
+		overflow-x: hidden;
+		background: #121117;
 		color: white;
 	}
 
@@ -23,7 +24,8 @@
 
 	@media (max-width: 992px) {
 		:global(.container) {
-			padding: 0px 15px !important;
+			padding-right: 15px !important;
+			padding-left: 15px !important;
 		}
 	}
 </style>

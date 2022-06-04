@@ -3,12 +3,13 @@
 	export let type: string = 'default';
 	// export let size: string = 'md';
 	export let link: string = '';
+	export let extraClass: string = '';
 	export let targetBlank: boolean = false;
 
 	let classToUse: string = '';
 
 	onMount(() => {
-		const baseClass = 'py-1 px-4 rounded-md cursor-pointer w-max';
+		const baseClass = 'transition-all py-1 px-4 rounded-md cursor-pointer w-max';
 		switch (type) {
 			case 'primary':
 				classToUse = `${baseClass} text-white border border-blue-600 bg-blue-600 hover:bg-blue-700`;
@@ -20,7 +21,13 @@
 				classToUse = `${baseClass} text-white bg-transparent border border-white hover:bg-white hover:text-black`;
 				break;
 			case 'cta':
-				classToUse = `${baseClass} text-white bg-transparent border-2 border-white hover:bg-white font-bold uppercase text-xs hover:text-black`;
+				classToUse = `${baseClass} cta bg-fuchsia-500 border-0 text-white border-2 border-white hover:bg-white font-bold uppercase text-md py-2 px-8 hover:text-black rounded-full`;
+				break;
+			case 'cta-small':
+				classToUse = `${baseClass} cta bg-fuchsia-500 border-0 text-white border-2 border-white hover:bg-white font-bold uppercase text-xs py-1 px-4 hover:text-black rounded-full`;
+				break;
+			case 'cta-small-secondary':
+				classToUse = `${baseClass} cta bg-gray-500 border-0 text-white border-2 border-white hover:bg-white font-bold uppercase text-xs py-1 px-4 hover:text-black rounded-full`;
 				break;
 			default:
 				classToUse = `${baseClass} text-white border border-gray-600 bg-gray-600 hover:bg-gray-700`;
@@ -30,9 +37,11 @@
 </script>
 
 {#if link !== ''}
-	<a href={link} target={targetBlank ? '_blank' : ''} class={classToUse} on:click><slot /></a>
+	<a href={link} target={targetBlank ? '_blank' : ''} class="{extraClass} {classToUse}" on:click
+		><slot /></a
+	>
 {:else}
-	<div class={classToUse} on:click>
+	<div class="{extraClass} {classToUse}" on:click>
 		<slot />
 	</div>
 {/if}

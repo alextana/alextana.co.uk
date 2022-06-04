@@ -199,7 +199,7 @@
 					class="entry text-gray-600 cursor-pointer w-32 h-32 {isWon
 						? 'opacity-0 pointer-events-none'
 						: ''} {entry.covered
-						? 'bg-gray-800 hover:bg-blue-800 hover:text-white'
+						? 'bg-gray-800 hover:bg-fuchsia-800 hover:text-white'
 						: 'bg-white'} rounded-3xl p-4 relative"
 					on:click={() => handleUncovering(entry)}
 				>

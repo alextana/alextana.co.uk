@@ -1,8 +1,8 @@
 <svg
 	xmlns="http://www.w3.org/2000/svg"
 	data-name="Layer 1"
-	width="850.53801"
-	height="740.82953"
+	width="650.53801"
+	height="540.82953"
 	viewBox="0 0 850.53801 740.82953"
 	xmlns:xlink="http://www.w3.org/1999/xlink"
 	><path
