@@ -10,7 +10,7 @@
 </div>
 
 <style>
-	:global(body) {
+	:global(html, body) {
 		overflow-x: hidden;
 		background: #121117;
 		color: white;
