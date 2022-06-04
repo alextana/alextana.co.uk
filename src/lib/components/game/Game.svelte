@@ -196,7 +196,7 @@
 				<div
 					class:uncovered={!entry.covered}
 					class:covered={entry.covered}
-					class="entry text-gray-600 cursor-pointer w-32 h-32 {isWon
+					class="entry text-gray-600 cursor-pointer w-24 h-24 md:w-32 md:h-32 {isWon
 						? 'opacity-0 pointer-events-none'
 						: ''} {entry.covered
 						? 'bg-gray-800 hover:bg-fuchsia-800 hover:text-white'
