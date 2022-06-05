@@ -18,9 +18,9 @@
 		</div>
 		<h1 class="text-6xl lg:text-8xl font-extrabold tracking-tighter mb-4">experience</h1>
 		<p class="about-text inline mb-1 leading-loose text-xl tracking-wide">
-			I have been interested in web design and development since when I was 12, and I've watched the
-			web change over the years from table-based layouts to mobile-friendly fully fledged
-			desktop-like applications.
+			I have been interested in web design and development since I was 12, and I've watched the web
+			change over the years from table-based layouts to mobile-friendly fully fledged desktop-like
+			applications.
 			<br />
 			I started working professionally as a front end developer in 2018, building websites for car dealerships
 			- using a wide range of technologies including
