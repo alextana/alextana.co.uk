@@ -283,7 +283,14 @@
 			{#if repos.length}
 				{#each repos || [] as repo, i}
 					{#if repo.name !== 'alextana'}
-						<div class="card-transition">
+						<div class="card-transition relative">
+							{#if repo?.topics?.includes('featured')}
+								<div
+									class="featured absolute left-1/2 transform -translate-x-1/2 -top-2 rounded-full font-bold text-neutral-800 text-xs uppercase w-max shadow-2xl bg-yellow-400 px-2 py-1"
+								>
+									📌 Featured
+								</div>
+							{/if}
 							<Card>
 								<div class="repo-info mb-2 text-gray-300">
 									<div class="repo-name text-3xl font-light tracking-tighter mb-1">
@@ -300,13 +307,15 @@
 									{#if repo.topics}
 										<div class="tag-list flex gap-1 flex-wrap mt-4">
 											{#each repo.topics as tag}
-												<div
-													class="
+												{#if tag.toLowerCase() !== 'featured'}
+													<div
+														class="
 												{setClass(tag)} tag px-2 py-1 text-white rounded-md smaller-txt font-semibold uppercase
 											"
-												>
-													{tag}
-												</div>
+													>
+														{tag}
+													</div>
+												{/if}
 											{/each}
 										</div>
 									{/if}
