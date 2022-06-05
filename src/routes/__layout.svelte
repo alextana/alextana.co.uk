@@ -9,6 +9,10 @@
 	<Footer />
 </div>
 
+<svelte:head>
+	<title>alex tana | Portfolio</title>
+</svelte:head>
+
 <style>
 	:global(html, body) {
 		overflow-x: hidden;
