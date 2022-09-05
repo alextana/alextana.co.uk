@@ -21,7 +21,7 @@
 				classToUse = `${baseClass} text-white bg-transparent border border-white hover:bg-white hover:text-black`;
 				break;
 			case 'cta':
-				classToUse = `${baseClass} cta bg-fuchsia-500 border-0 text-white border-2 border-white hover:bg-white font-bold uppercase text-md py-2 px-8 hover:text-black rounded-full`;
+				classToUse = `${baseClass} cta bg-black border-0 text-white border-2 border-white hover:bg-white font-bold uppercase text-md py-2 px-8 hover:text-black rounded-full`;
 				break;
 			case 'cta-small':
 				classToUse = `${baseClass} cta bg-fuchsia-500 border-0 text-white border-2 border-white hover:bg-white font-bold uppercase text-xs py-1 px-4 hover:text-black rounded-full`;

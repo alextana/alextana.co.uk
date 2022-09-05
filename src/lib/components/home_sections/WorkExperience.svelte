@@ -7,15 +7,7 @@
 </div>
 <div class="container about-container relative text-container mx-auto z-5">
 	<div class="about-text w-full lg:w-2/3 mx-auto lg:ml-auto text-left lg:text-right">
-		<div class="blob">
-			<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-				<path
-					fill="#FF0066"
-					d="M40.5,-60.1C49.1,-49.5,50.3,-33.1,54.9,-18C59.5,-3,67.6,10.8,67.5,25.3C67.4,39.8,59.2,54.9,46.6,65.5C33.9,76.1,17,82.2,-1.1,83.8C-19.2,85.3,-38.5,82.4,-53.3,72.5C-68,62.6,-78.3,45.7,-76.5,29.9C-74.7,14.1,-60.9,-0.6,-52.3,-13.9C-43.7,-27.2,-40.4,-39.1,-32.5,-49.9C-24.7,-60.8,-12.3,-70.7,1.8,-73.2C15.9,-75.7,31.9,-70.8,40.5,-60.1Z"
-					transform="translate(100 100)"
-				/>
-			</svg>
-		</div>
+		<div class="blob" />
 		<h1 class="text-6xl lg:text-8xl font-extrabold tracking-tighter mb-4">experience</h1>
 		<p class="about-text inline mb-1 leading-loose text-xl tracking-wide">
 			I have been interested in web design and development since I was 12, and I've watched the web
@@ -41,6 +33,18 @@
 </div>
 
 <style>
+	@keyframes morph {
+		0%,
+		100% {
+			border-radius: 40% 60% 70% 30% / 40% 40% 60% 50%;
+		}
+		34% {
+			border-radius: 70% 30% 50% 50% / 30% 30% 70% 70%;
+		}
+		67% {
+			border-radius: 100% 60% 60% 100% / 100% 100% 60% 60%;
+		}
+	}
 	.about-text {
 		z-index: 10;
 		position: relative;
@@ -53,17 +57,17 @@
 		width: 100%;
 	}
 	.blob {
-		width: 1024px;
+		background: #2b3da1;
+		border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%;
+		overflow: hidden;
+		animation: morph 15s linear infinite;
+		width: 924px;
 		display: block;
-		height: 1024px;
+		height: 754px;
 		z-index: -1;
 		position: absolute;
 		top: 30%;
 		right: -50%;
 		transform: translateY(-50%);
-	}
-	.blob path {
-		fill: #2b3da1;
-		backdrop-filter: blur(20px);
 	}
 </style>

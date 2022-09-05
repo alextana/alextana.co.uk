@@ -10,7 +10,7 @@
 </div>
 
 <svelte:head>
-	<title>alex tana | Portfolio</title>
+	<title>Alex Tana | Portfolio</title>
 </svelte:head>
 
 <style>
