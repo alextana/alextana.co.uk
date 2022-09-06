@@ -94,8 +94,6 @@
 				return;
 			}
 			repos.unshift(repos.splice(index, 1)[0]);
-
-			console.log(repos);
 		} catch (error) {
 			console.error(error);
 			repoError = true;
