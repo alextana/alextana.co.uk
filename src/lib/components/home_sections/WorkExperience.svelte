@@ -22,12 +22,14 @@
 			<span class="text-2xl xl:text-3xl font-mono">{'{.js}'}</span> and
 			<span class="text-2xl xl:text-3xl font-mono">{'{{ Vue }}'}</span>.
 			<br />
-			In 2021 I started working at Barkweb, where I'm currently helping the team build a CMS and e-commerce/auction
+			In 2021 I started working at Barkweb, where I've helped the team build a CMS and e-commerce/auction
 			platforms using cutting edge technologies like
 			<span class="text-2xl xl:text-3xl font-mono tracking-tighter">$: Svelte</span>,
 			<span class="text-2xl xl:text-3xl italic tracking-tighter font-extrabold">GO</span>
 			and <span class="text-2xl xl:text-3xl font-mono">>>esbuild</span> to name a few.
 			<br />
+			In february 2023 I've joined Amiqus, where I am currently helping the team to build their new front end
+			using <span class="text-2xl xl:text-3xl font-mono">{'{{ Vue }}'}</span>.
 		</p>
 	</div>
 </div>
