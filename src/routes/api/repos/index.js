@@ -1,3 +1,5 @@
+import { Buffer } from 'node:buffer'
+
 export async function get() {
   const clientID = import.meta.env.VITE_GITHUB_CLIENT_ID
   const clientSecret = import.meta.env.VITE_GITHUB_CLIENT_SECRET
