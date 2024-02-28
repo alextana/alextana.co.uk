@@ -16,7 +16,7 @@
 <style>
 	:global(html, body) {
 		overflow-x: hidden;
-		background: #121117;
+		background: #000;
 		color: white;
 	}
 

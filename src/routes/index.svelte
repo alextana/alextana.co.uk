@@ -212,13 +212,13 @@
 			{#if repos.length}
 				{#each repos || [] as repo, i}
 					{#if repo.name !== 'alextana'}
-						<div class="card-transition relative">
+						<div class="relative">
 							{#if repo?.topics?.includes('featured')}
-								<div
+								<!-- <div
 									class="featured absolute left-1/2 transform -translate-x-1/2 -top-2 rounded-full font-bold text-neutral-800 text-xs uppercase w-max shadow-2xl bg-yellow-400 px-2 py-1"
 								>
 									📌 Featured
-								</div>
+								</div> -->
 							{/if}
 							<Card>
 								<div class="repo-info mb-2 text-gray-300">
