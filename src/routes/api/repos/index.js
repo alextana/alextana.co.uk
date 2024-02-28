@@ -1,3 +1,5 @@
+import { Buffer } from 'buffer'
+
 export async function get() {
   const clientID = import.meta.env.VITE_GITHUB_CLIENT_ID
   const clientSecret = import.meta.env.VITE_GITHUB_CLIENT_SECRET
@@ -5,7 +7,7 @@ export async function get() {
   const res = await fetch(
     requestURL, {
     headers: {
-      'Authorization': 'Basic ' + (new Buffer(clientID + ':' + clientSecret).toString('base64'))
+      'Authorization': 'Basic ' + (Buffer.from(clientID + ':' + clientSecret).toString('base64'))
     }
   })
 

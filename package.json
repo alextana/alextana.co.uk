@@ -38,6 +38,7 @@
 	"type": "module",
 	"dependencies": {
 		"@types/uuid": "^8.3.4",
+		"buffer": "^6.0.3",
 		"svelte-confetti-explosion": "^0.2.0",
 		"svelte-cubed": "^0.2.1",
 		"three": "^0.140.2",
