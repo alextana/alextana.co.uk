@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { browser } from '$app/env';
+	import { browser } from '$app/environment';
 	import { fly, scale } from 'svelte/transition';
 	import { onMount } from 'svelte';
 	import { quintInOut } from 'svelte/easing';
